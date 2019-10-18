@@ -1,12 +1,11 @@
 package com.example.videoplayer
 
+
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.widget.VideoView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_player.*
+import android.widget.MediaController
 
 class Player : AppCompatActivity() {
 
@@ -16,14 +15,17 @@ class Player : AppCompatActivity() {
 
         configureVideoView()
     }
-
+    private var mediaController: MediaController? = null
     private fun configureVideoView() {
         //val sampleVideo = findViewById<VideoView>(R.id.videoView)
         val path = "android.resource://" + packageName + "/" + R.raw.nature
         //val path = "android.resource://com.example.VideoPlayer/" + R.raw.nature
         videoView.setVideoURI(Uri.parse(path))
-        //videoView.setVideoPath("android:resource://" + packageName + "/" + R.raw.nature)
         //videoView.setVideoPath("http://www.ebookfrenzy.com/android_book/nature.mp4")
+        mediaController = MediaController(this)
+        mediaController?.setAnchorView(videoView)
+        videoView.setMediaController(mediaController)
+
         videoView.start()
     }
 }
